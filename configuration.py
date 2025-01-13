@@ -1,7 +1,11 @@
-from transformers import PretrainedConfig, LlavaConfig
+from transformers import PretrainedConfig
 from transformers import CONFIG_MAPPING
 from transformers import AutoConfig
-from tinyllava.utils.constants import *
+
+IGNORE_INDEX = -100
+IMAGE_TOKEN_INDEX = -200
+DEFAULT_IMAGE_TOKEN = "<image>"
+
 
 class TinyLlavaConfig(PretrainedConfig):
 
@@ -32,7 +36,7 @@ class TinyLlavaConfig(PretrainedConfig):
         num_resampler_layers = None,
         use_cache = False,
         cache_dir = None,
-        tokenizer_use_fast = True,
+        tokenizer_use_fast = False,
         tune_type_llm = 'frozen',
         tune_type_connector = 'frozen',
         tune_type_vision_tower = 'frozen',
@@ -70,27 +74,6 @@ class TinyLlavaConfig(PretrainedConfig):
         self._load_vision_config(vision_config)
             
         super().__init__(**kwargs)
-    
-    def load_from_config(self, config):
-        self.llm_model_name_or_path = getattr(config, 'model_name_or_path',  '')
-        self.tokenizer_name_or_path = getattr(config, 'tokenizer_name_or_path', None) or self.llm_model_name_or_path
-        self.vision_model_name_or_path = getattr(config, 'vision_tower',  '')
-        self.vision_model_name_or_path2 = getattr(config, 'vision_tower2',  '')
-        self.connector_type = getattr(config, 'connector_type',  None)
-        self.vision_feature_layer = getattr(config, 'mm_vision_select_layer',  -2)
-        self.vision_feature_select_strategy = getattr(config, 'mm_vision_select_feature',  "patch")
-        self.image_aspect_ratio = getattr(config, 'image_aspect_ratio',  "pad")
-        self.resampler_hidden_size = getattr(config, 'resampler_hidden_size',  None)
-        self.num_queries = getattr(config, 'num_queries',  None)
-        self.num_resampler_layers = getattr(config, 'num_resampler_layers',  None)
-        
-        self.cache_dir = getattr(config, 'cache_dir', None)
-        self.tokenizer_use_fast = getattr(config, 'tokenizer_use_fast', False)
-        self.tokenizer_model_max_length = getattr(config, 'model_max_length', 2048)
-        self.tokenizer_padding_side = getattr(config, 'tokenizer_padding_side', 'right')
-        
-        self._load_text_config()
-        self._load_vision_config()
       
     
     def _load_text_config(self, text_config=None):
@@ -130,3 +113,4 @@ class TinyLlavaConfig(PretrainedConfig):
         self.vision_config.model_name_or_path2 = self.vision_model_name_or_path2.split(':')[-1]
         self.vision_hidden_size = getattr(self.vision_config, 'hidden_size',  None)  
         
+

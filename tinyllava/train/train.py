@@ -46,11 +46,12 @@ def _load_connector_settings(model_arguments):
     return connector_args
 
 
-def train():
+def train():  
     
     # load argument
     parser = transformers.HfArgumentParser(
         (ModelArguments, DataArguments, TrainingArguments))
+
     model_arguments, data_arguments, training_arguments = parser.parse_args_into_dataclasses()
     
     logger_setting(getattr(training_arguments, 'output_dir', None))
@@ -79,6 +80,7 @@ def train():
     data_module = make_supervised_data_module(tokenizer=tokenizer,
                                               data_args=data_arguments)
     log_trainable_params(model)  # not work well with zero3
+    training_arguments.report_to = ['wandb', 'codecarbon']
     trainer = LLaVATrainer(model=model, #does not require model.to(device), huggingface/deepspeed does it for you?
                            tokenizer=tokenizer,
                            args=training_arguments,

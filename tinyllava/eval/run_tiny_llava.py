@@ -82,7 +82,7 @@ def eval_model(args):
             input_ids,
             images=images_tensor,
             do_sample=True if args.temperature > 0 else False,
-            temperature=args.temperature,
+            temperature=args.temperature if args.temperature > 0 else None,
             top_p=args.top_p,
             num_beams=args.num_beams,
             pad_token_id=tokenizer.pad_token_id,

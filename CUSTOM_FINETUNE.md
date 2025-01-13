@@ -80,6 +80,7 @@ with open(pokemon_data_path, 'w') as f:
 </details>
 
 ## Custom Finetune
+
 After acquiring the dataset following the above data format, you can finetune our trained model TinyLLaVA-Phi-2-SigLIP-3.1B checkpoint by using lora.
 
 - Replace data paths and `output_dir` with yours in `scripts/train/custom_finetune.sh`
@@ -90,6 +91,7 @@ bash scripts/train/custom_finetune.sh
 ```
 
 ## Evaluation with Custom Finetuned Model
+
 All of the models trained by TinyLLaVA Factory have the same evaluation procedure, no matter it is trained through custom finetune or through normal training. Please see the [Evaluation](https://tinyllava-factory.readthedocs.io/en/latest/Evaluation.html) section in our Doc.
 
 

@@ -91,6 +91,7 @@ class Template:
         return msg
     
     def make_labels(self, input_ids, prompt, tokenizer):
+        
         labels = copy.deepcopy(input_ids)
         sep, eos_token = self.separator.apply()
         total_len = int(labels.ne(tokenizer.pad_token_id).sum())
@@ -128,7 +129,8 @@ class Template:
             parts[0] += sep
             round_len = len(self.tokenizer_image_token(rou, tokenizer)) + eos_token_length
             instruction_len = len(self.tokenizer_image_token(parts[0], tokenizer)) - 1
-            labels[cur_len : cur_len + instruction_len] = IGNORE_INDEX
+            labels[cur_len : cur_len + instruction_len] = IGNORE_INDEX # This one masks the instruction part of the prompt
+            #labels[labels == -200] = -100 # This one masks only the default image token
             cur_len += round_len
         labels[cur_len:] = IGNORE_INDEX
         return labels, cur_len
@@ -153,8 +155,4 @@ class Template:
                 return torch.tensor(input_ids, dtype=torch.long)
             raise ValueError(f'Unsupported tensor type: {return_tensors}')
         return input_ids
-
-
-
-
 

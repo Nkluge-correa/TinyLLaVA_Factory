@@ -29,7 +29,7 @@ def train():
     # load pretrained checkpoint
     model = AutoModelForCausalLM.from_pretrained(training_arguments.pretrained_model_path, trust_remote_code=True)
     config = model.config
-    tokenizer = AutoTokenizer.from_pretrained(training_arguments.pretrained_model_path, use_fast=False, model_max_length = config.tokenizer_model_max_length,padding_side = config.tokenizer_padding_side)
+    tokenizer = AutoTokenizer.from_pretrained(training_arguments.pretrained_model_path, use_fast=True, model_max_length = config.tokenizer_model_max_length,padding_side = config.tokenizer_padding_side)
     model.tokenizer = tokenizer
     model = training_recipe(model)
     model.config.use_cache = False
