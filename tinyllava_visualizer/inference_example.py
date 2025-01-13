@@ -3,7 +3,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from tinyllava_visualizer.tinyllava_visualizer import *
 
 prompt = "What are the things I should be cautious about when I visit here?"
-image_file = "https://llava-vl.github.io/static/images/view.jpg"
+image_file = "https://raw.githubusercontent.com/Nkluge-correa/TinyLLaVA_Factory/refs/heads/main/assets/sample.jpg"
 
 model = AutoModelForCausalLM.from_pretrained("/mnt/hwfile/opendatalab/wensiwei/checkpoint/TinyLLaVA-Phi-2-SigLIP-3.1B", trust_remote_code=True)
 tokenizer = AutoTokenizer.from_pretrained("/mnt/hwfile/opendatalab/wensiwei/checkpoint/TinyLLaVA-Phi-2-SigLIP-3.1B", trust_remote_code=True)
