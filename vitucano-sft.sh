@@ -47,8 +47,8 @@ echo "# [$SLURM_JOB_ID] `date` " > ${out}
 
 deepspeed /lustre/mlnvme/data/the_tucanos/TinyLLaVA_Factory/tinyllava/train/train.py \
 --deepspeed "/lustre/mlnvme/data/the_tucanos/TinyLLaVA_Factory/scripts/zero3.json" \
---data_path "/lustre/mlnvme/data/the_tucanos/LLaVA-Pretrain/data/sft/data-sft-shuffle.json" \
---image_folder "/lustre/mlnvme/data/the_tucanos/LLaVA-Pretrain/data/sft" \
+--data_path "/lustre/mlnvme/data/the_tucanos/dataset/data/sft/sft-data.json" \
+--image_folder "/lustre/mlnvme/data/the_tucanos/dataset/data/sft" \
 --is_multimodal True \
 --conv_version "llama" \
 --model_name_or_path "TucanoBR/Tucano-2b4" \
@@ -56,11 +56,11 @@ deepspeed /lustre/mlnvme/data/the_tucanos/TinyLLaVA_Factory/tinyllava/train/trai
 --vision_tower2 "" \
 --connector_type "mlp2x_gelu" \
 --mm_vision_select_layer -2 \
---image_aspect_ratio square \
+--image_aspect_ratio "square" \
 --attn_implementation flash_attention_2 \
 --training_recipe "common" \
---tune_type_llm full \
---tune_type_vision_tower frozen \
+--tune_type_llm "full" \
+--tune_type_vision_tower "frozen" \
 --tune_vision_tower_from_layer 0 \
 --tune_type_connector "full" \
 --group_by_modality_length False \

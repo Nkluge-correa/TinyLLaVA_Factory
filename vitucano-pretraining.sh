@@ -47,8 +47,8 @@ echo "# [$SLURM_JOB_ID] `date` " > ${out}
 
 deepspeed /lustre/mlnvme/data/the_tucanos/TinyLLaVA_Factory/tinyllava/train/train.py \
 --deepspeed "/lustre/mlnvme/data/the_tucanos/TinyLLaVA_Factory/scripts/zero3.json" \
---data_path "/lustre/mlnvme/data/the_tucanos/LLaVA-Pretrain/data/pretraining/data-pretraining.json" \
---image_folder "/lustre/mlnvme/data/the_tucanos/LLaVA-Pretrain/data/pretraining" \
+--data_path "/lustre/mlnvme/data/the_tucanos/dataset/data/pretraining/pretraining-data.json" \
+--image_folder "/lustre/mlnvme/data/the_tucanos/dataset/data/pretraining" \
 --is_multimodal True \
 --conv_version "pretrain" \
 --model_name_or_path "TucanoBR/Tucano-2b4" \
